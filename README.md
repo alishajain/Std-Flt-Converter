@@ -1,3 +1,5 @@
-To compile the code run the following commands
+To compile the code run the following commands:
+
 bash compile.sh
+
 ./std-flt
