@@ -1,3 +1,4 @@
+bison -d parser.y
 flex lexer.l
-g++ lex.yy.c -lfl -o std-flt
+g++ parser.tab.c lex.yy.c -lfl -o std-flt
 ./std-flt
