@@ -28,11 +28,14 @@ void yyerror(const char *s1);
 
 %%
 
+/**
+ Grammar rules
+ */
 converter:
-	converter jc	{ cout << "JC\n" << $2 << endl; }
-	| converter mi	{ cout << "MI\n" << $2 << endl; }
-	| jc		{ cout << "jc\n" << $1 << endl; }
-	| mi		{ cout << "mi\n" << $1 << endl; }
+	converter jc	{ cout << "JC " << $2 << " JC" << endl; }
+	| converter mi	{ cout << "MI " << $2 << " MI" << endl; }
+	| jc		{ cout << "jc " << $1 << " jc" << endl; }
+	| mi		{ cout << "mi " << $1 << " mi" << endl; }
 %%
 
 int main(int argc, char **argv)	// Definition of main function

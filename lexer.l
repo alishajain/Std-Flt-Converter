@@ -25,11 +25,12 @@ MI	(MEMBER{s}INCIDENCES){endl}
         		    value = strtok (str,";\r\n");
         		    while (value != NULL) {
 				yylval.c =strdup (value);
-                                cout << yylval.c << endl;
+				return jc;
+ //                               cout << yylval.c << endl;
             			value = strtok (NULL, " ;");
             			i++;
         		    } 
-			    return jc;
+			    //return jc;
 			}
  
 {MI}({digits}+;{s}*)+	{ // For member-incidences
@@ -38,12 +39,13 @@ MI	(MEMBER{s}INCIDENCES){endl}
                             char *value;
                             value = strtok (str_mi,";\r\n");
                             while (value != NULL) {
-                                yylval.c = strdup (value);
-				cout << yylval.c << endl;
+				yylval.c = strdup (value);
+				return mi;
+//				cout << yylval.c << endl;
 				value = strtok (NULL, " ;");
 				i++;
                             }
-			    return mi;
+			   // return mi;
                         }
 . ;
 
