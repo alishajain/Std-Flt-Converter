@@ -18,30 +18,32 @@ MI	(MEMBER{s}INCIDENCES){endl}
 
 [ \n\t]	;
 
-{JC}({digits}+;{s}*)+	{ 
+{JC}({digits}+;{s}*)+	{ // For joint-coordinates 
 			    char* str = strdup( yytext );
 			    int i = 0;
-			    char *pch;
-        		    pch = strtok (str,";\r\n");
-        		    while (pch != NULL) {
-        			cout << pch << endl;
-			//	return jc;
-            			pch = strtok (NULL, " ;");
+			    char *tok;
+        		    value = strtok (str,";\r\n");
+        		    while (value != NULL) {
+				yylval.c = value;
+            			value = strtok (NULL, " ;");
             			i++;
         		    } 
+			    return jc;
 			}
  
-{MI}({digits}+;{s}*)+	{ 
+{MI}({digits}+;{s}*)+	{ // For member-incidences
+			    cout << yytext << endl;
                             char* str_mi = strdup( yytext );
                             int i = 0;
-                            char *tok;
-                            tok = strtok (str_mi,";\r\n");
-                            while (tok != NULL) {
-				cout << tok << endl;
+                            char *value;
+                            value = strtok (str_mi,";\r\n");
+                            while (value != NULL) {
+                                yylval.c = strdup(value);
 		//		return mi;
 				tok = strtok (NULL, " ;");
 				i++;
                             }
+			    return mi;
                         }
 . ;
 

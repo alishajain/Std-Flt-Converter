@@ -24,8 +24,8 @@ void yyerror(const char *s1);
 /**
  Token declaration with appropriate type
  */
-%token <c> jc
-%token <c> mi
+%token <c> jc mi
+
 %%
 
 converter:
