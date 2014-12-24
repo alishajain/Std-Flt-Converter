@@ -9,31 +9,39 @@ using namespace std;
 %}
 
 s       [[:space:]]
-digits	[0-9]+{s}*
+digits	[0-9]+
 endl	[\r]*[\n]*
-JC	(JOINT{s}COORDINATES){endl}
-MI	(MEMBER{s}INCIDENCES){endl}
+jc	(JOINT{s}COORDINATES){endl}
+mi	(MEMBER{s}INCIDENCES){endl}
 
 %%
 
-[ \n\t]	;
+[ \t]	;
 
-{JC}({digits}+;{s}*)+	{ // For joint-coordinates
+{jc}		{ yylval.c = strdup (yytext); return JC; }
+
+{mi}		{ yylval.c = strdup (yytext); return MI; }
+
+{digits}	{ yylval.f = atof (yytext); return DIGIT; }
+
+[;{s}]		{ return EXTRA; }
+
+({digits}+;{s}*)+	{ /*// For joint-coordinates
 			    char* str = strdup( yytext );
 			    int i = 0;
 			    char *value;
         		    value = strtok (str,";\r\n");
         		    while (value != NULL) {
-				yylval.c =strdup (value);
+				yylval.c = strdup (value);
 				return jc;
- //                               cout << yylval.c << endl;
+                                cout << yylval.c << endl;
             			value = strtok (NULL, " ;");
             			i++;
         		    } 
-			    //return jc;
+			    //return jc;*/
 			}
  
-{MI}({digits}+;{s}*)+	{ // For member-incidences
+{mi}({digits}+;{s}*)+	{ /*// For member-incidences
                             char* str_mi = strdup( yytext );
                             int i = 0;
                             char *value;
@@ -41,11 +49,12 @@ MI	(MEMBER{s}INCIDENCES){endl}
                             while (value != NULL) {
 				yylval.c = strdup (value);
 				return mi;
-//				cout << yylval.c << endl;
+				cout << yylval.c << endl;
 				value = strtok (NULL, " ;");
 				i++;
                             }
-			   // return mi;
+			   // return mi;*/
                         }
+{endl}			{ return ENDL; }
 . ;
 

@@ -24,18 +24,27 @@ void yyerror(const char *s1);
 /**
  Token declaration with appropriate type
  */
-%token <c> jc mi
+%token <c> JC MI
+%token <f> DIGIT
+%token ENDL EXTRA
 
 %%
 
 /**
  Grammar rules
  */
+
 converter:
-	converter jc	{ cout << "JC " << $2 << " JC" << endl; }
-	| converter mi	{ cout << "MI " << $2 << " MI" << endl; }
-	| jc		{ cout << "jc " << $1 << " jc" << endl; }
-	| mi		{ cout << "mi " << $1 << " mi" << endl; }
+	jc
+	| mi;
+jc:
+	JC ENDL digit ENDL { cout << "	JC	"  << $1 << endl; };
+mi:
+	MI ENDL digit ENDL { cout << "	MI      "  << $1 << endl; };
+digit:
+	digit DIGIT
+	| DIGIT EXTRA;
+
 %%
 
 int main(int argc, char **argv)	// Definition of main function
