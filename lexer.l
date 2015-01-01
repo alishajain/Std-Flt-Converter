@@ -19,7 +19,7 @@ mi		(MEMBER{space}INCIDENCES{endl})
 semicolon	[;]
 finish		(FINISH)
 
-month           [A-Za-z]+
+month           Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
 date            ({digits}-{month}-{digits})
 width           (WIDTH{space}{digits})
 
@@ -32,42 +32,12 @@ width           (WIDTH{space}{digits})
 {integer}	{  yylval.f = atof (yytext); return DIGIT; }
 
 {width}
+
 {date}
 
 {semicolon}	{ return SEMICOLON; }
 
-{finish}	{ return FINISH;/* }
-
-({digits}+;{s}*)+	{ *//*// For joint-coordinates
-			    char* str = strdup( yytext );
-			    int i = 0;
-			    char *value;
-        		    value = strtok (str,";\r\n");
-        		    while (value != NULL) {
-				yylval.c = strdup (value);
-				return jc;
-                                cout << yylval.c << endl;
-            			value = strtok (NULL, " ;");
-            			i++;
-        		    } 
-			    //return jc;*/
-		/*	}
- 
-{mi}({digits}+;{s}*)+	{ *//*// For member-incidences
-                            char* str_mi = strdup( yytext );
-                            int i = 0;
-                            char *value;
-                            value = strtok (str_mi,";\r\n");
-                            while (value != NULL) {
-				yylval.c = strdup (value);
-				return mi;
-				cout << yylval.c << endl;
-				value = strtok (NULL, " ;");
-				i++;
-                            }
-			   // return mi;*/
-                        }
-
+{finish}	{ return FINISH; }
 
 .			;
 
