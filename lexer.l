@@ -9,22 +9,34 @@ int line_num = 1;
 
 %}
 
-s       [[:space:]]
-digit	[0-9]
-float	{digit}+"."{digit}*
-endl	[\r]*[\n]*
-jc	(JOINT{s}COORDINATES){endl}
-mi	(MEMBER{s}INCIDENCES){endl}
+space		[[:space:]]
+digits		[0-9]+
+integer		{digits}
+float		{integer}"."{digits}*
+endl		[\r]*[\n]*
+jc		(JOINT{space}COORDINATES{endl})
+mi		(MEMBER{space}INCIDENCES{endl})
+semicolon	[;]
+finish		(FINISH)
+
+month           [A-Za-z]+
+date            ({digits}-{month}-{digits})
+width           (WIDTH{space}{digits})
 
 %%
 
-{jc}	{ yylval.c = strdup (yytext); return JC; }
+{jc}		{ yylval.c = strdup (yytext); return JC; }
 
-{mi}	{ yylval.c = strdup (yytext); return MI; }
+{mi}		{ yylval.c = strdup (yytext); return MI; }
 
-{float}	{ yylval.f = atof (yytext); cout << yytext; return DIGIT; }
+{integer}	{  yylval.f = atof (yytext); return DIGIT; }
 
-[;{s}]	{ return EXTRA;/* }
+{width}
+{date}
+
+{semicolon}	{ return SEMICOLON; }
+
+{finish}	{ return FINISH;/* }
 
 ({digits}+;{s}*)+	{ *//*// For joint-coordinates
 			    char* str = strdup( yytext );
@@ -56,7 +68,6 @@ mi	(MEMBER{s}INCIDENCES){endl}
 			   // return mi;*/
                         }
 
-{endl}			{ ++line_num; return ENDL; }
 
 .			;
 

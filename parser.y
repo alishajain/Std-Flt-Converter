@@ -27,7 +27,7 @@ void yyerror(const char *s1);
  */
 %token <c> JC MI
 %token <f> DIGIT
-%token ENDL EXTRA
+%token ENDL FINISH SEMICOLON 
 
 %%
 
@@ -36,15 +36,25 @@ void yyerror(const char *s1);
  */
 
 converter:
-	jc
-	| mi;
+	jc converter
+	| mi converter
+	| jc FINISH
+	| mi FINISH
+	;
 jc:
-	JC digit ENDL { cout << "	JC	"  << $1 << endl; };
+	JC coord { cout << $1 << endl; }
+	;
 mi:
-	MI digit ENDL { cout << "	MI      "  << $1 << endl; };
+	MI coord { cout << $1 << endl; }
+	;
+coord:
+	digit SEMICOLON
+	| digit SEMICOLON coord
+	;
 digit:
-	digit DIGIT
-	| DIGIT EXTRA;
+	DIGIT digit { cout << $1 << endl; }
+	| DIGIT { cout << $1 << endl; } 
+	;
 
 %%
 
