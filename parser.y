@@ -7,6 +7,7 @@ using namespace std;
 extern "C" int yylex();
 extern "C" int yyparse (void);
 extern "C" FILE *yyin;
+extern int line_num;
 
 void yyerror(const char *s1);
 #define YYDEBUG 1
@@ -38,9 +39,9 @@ converter:
 	jc
 	| mi;
 jc:
-	JC ENDL digit ENDL { cout << "	JC	"  << $1 << endl; };
+	JC digit ENDL { cout << "	JC	"  << $1 << endl; };
 mi:
-	MI ENDL digit ENDL { cout << "	MI      "  << $1 << endl; };
+	MI digit ENDL { cout << "	MI      "  << $1 << endl; };
 digit:
 	digit DIGIT
 	| DIGIT EXTRA;
@@ -86,6 +87,6 @@ int main(int argc, char **argv)	// Definition of main function
 }
 void yyerror(const char *s1)	// Definition of function handling error
 {
-	cout << "Parser error! Message: " << s1 << endl;
+	cout << "Parser error! Message: " << s1 << " on line " << line_num << endl;
 	exit(-1);
 }
