@@ -10,9 +10,9 @@ int line_num = 1;
 %}
 
 space		[[:space:]]
-digits		[0-9]+
-integer		{digits}
-float		{integer}"."{digits}*
+digit		[0-9]+
+integer		{digit}
+float		{integer}"."{digit}*
 endl		[\r]*[\n]*
 jc		(JOINT{space}COORDINATES{endl})
 mi		(MEMBER{space}INCIDENCES{endl})
@@ -20,24 +20,24 @@ semicolon	[;]
 finish		(FINISH)
 
 month           Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
-date            ({digits}-{month}-{digits})
-width           (WIDTH{space}{digits})
+date            ({digit}-{month}-{digit})
+width           (WIDTH{space}{digit})
 
 %%
 
-{jc}		{ yylval.c = strdup (yytext); return JC; }
+{jc}			{ yylval.c = strdup (yytext); return JC; }
 
-{mi}		{ yylval.c = strdup (yytext); return MI; }
+{mi}			{ yylval.c = strdup (yytext); return MI; }
 
-{integer}	{  yylval.f = atof (yytext); return DIGIT; }
+{integer}|{float}	{  yylval.f = atof (yytext); return DIGIT; }
 
 {width}
 
 {date}
 
-{semicolon}	{ return SEMICOLON; }
+{semicolon}		{ return SEMICOLON; }
 
-{finish}	{ return FINISH; }
+{finish}		{ return FINISH; }
 
 .			;
 
