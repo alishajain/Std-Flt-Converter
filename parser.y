@@ -1,4 +1,5 @@
 %{
+#include "write_felt.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -7,10 +8,13 @@ using namespace std;
 extern "C" int yylex();
 extern "C" int yyparse (void);
 extern "C" FILE *yyin;
-extern int line_num;
 
 void yyerror(const char *s1);
 #define YYDEBUG 1
+
+write w;
+int n_i = 0, b_i = 0;
+char mode = 'n';
 %}
 
 /**
@@ -25,7 +29,7 @@ void yyerror(const char *s1);
 /**
  Token declaration with appropriate type
  */
-%token <c> JC MI
+%token <c> JC MI DESCRIPTION
 %token <f> DIGIT
 %token ENDL FINISH SEMICOLON 
 
@@ -36,50 +40,63 @@ void yyerror(const char *s1);
  */
 
 converter:
-	jc converter
-	| mi converter
-	| jc FINISH
-	| mi FINISH
+	title jc mi end
+	;
+title:
+	DESCRIPTION { w.write_title(); }
 	;
 jc:
-	JC coord { cout << $1 << endl; }
+	JC coord { w.write_nodes(); mode = 'b'; }
 	;
 mi:
-	MI coord { cout << $1 << endl; }
+	MI coord { w.write_beams(); }
 	;
 coord:
 	digit SEMICOLON
 	| digit SEMICOLON coord
 	;
 digit:
-	DIGIT digit { cout << $1 << endl; }
-	| DIGIT { cout << $1 << endl; } 
+	digit DIGIT { 
+			if (mode == 'n') {
+			    w.store_values('n', $2, n_i);
+			    n_i++;
+			} else {
+			    w.store_values('b', $2, b_i);
+                            b_i++;
+			}
+		    }
+	| DIGIT { } 
 	;
-
+end:
+	FINISH { w.write_end_file(); }
+	;
+	
 %%
 
 int main(int argc, char **argv)	// Definition of main function
 {
-	/*int c;
-	string arg, out_file;
+	string out_file;
 	if(argc > 1)
 	{
-		if(!(yyin = fopen(argv[2], "r")))	// open the first argument file and put it in yyin FILE variable 
+		if(!(yyin = fopen(argv[1], "r")))	// open the first argument file and put it in yyin FILE variable 
 		{
 			perror(argv[1]);
 			return (1);
 		}
 
-		arg = argv [1];
-		if( arg.compare("flt") == 0 )
-		c = 1;
-			else if( arg.compare("std") == 0 )
-		c = 2;
+		out_file = argv [2];	// create the output file
+	}
 
-		out_file = argv[3];
-	}*/
+	w.write_description(out_file);
 
-        // open a file handle to a particular file:
+        while(!feof(yyin)) //until input file doesn't end 
+        {
+//              yydebug = 1;	Bison debugger
+                yyparse(); //keep on calling above grammar rules 
+        }
+
+
+/*        // open a file handle to a particular file:
         FILE *myfile = fopen("beam.std", "r");
         // make sure it's valid:
         if (!myfile) {
@@ -93,10 +110,10 @@ int main(int argc, char **argv)	// Definition of main function
         do {
                 yyparse();
         } while (!feof(yyin));
-
+*/
 }
 void yyerror(const char *s1)	// Definition of function handling error
 {
-	cout << "Parser error! Message: " << s1 << " on line " << line_num << endl;
+	cout << "Parser error! Message: " << s1 << endl;
 	exit(-1);
 }

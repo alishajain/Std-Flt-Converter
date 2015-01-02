@@ -5,7 +5,6 @@ using namespace std;
 
 #define YY_DECL extern "C" int yylex()
 #include "parser.tab.h"
-int line_num = 1;
 
 %}
 
@@ -24,16 +23,17 @@ date            ({digit}-{month}-{digit})
 width           (WIDTH{space}{digit})
 
 %%
+[ \t\n]			;
 
 {jc}			{ yylval.c = strdup (yytext); return JC; }
 
 {mi}			{ yylval.c = strdup (yytext); return MI; }
 
-{integer}|{float}	{  yylval.f = atof (yytext); return DIGIT; }
+{integer}|{float}	{ yylval.f = atof (yytext); return DIGIT; }
 
 {width}
 
-{date}
+{date}			{ yylval.c = strdup (yytext); return DESCRIPTION; }
 
 {semicolon}		{ return SEMICOLON; }
 
