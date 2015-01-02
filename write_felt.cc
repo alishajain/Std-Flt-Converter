@@ -41,7 +41,6 @@ void write::write_nodes() {
 	f << endl << "nodes" << endl;
 
 	for (int j = 0, i = 1; j < jc_count; j++) {
-cout << " jc " << jc[j] << endl;
 	    if (j % 3 == 0) {
 		f << i << "  x=" << jc[j];
 		i++;
@@ -58,7 +57,6 @@ void write::write_beams() {
 	f << endl << "beam elements" << endl;
 
         for (int j = 0, i = 1; j < mi_count; j++) {
-cout << " mi " << mi[j] << endl;
 	    if (j % 2 == 0) {
 		f << i << "  nodes=[" << mi[j];
 		i++;

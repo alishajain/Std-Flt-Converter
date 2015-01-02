@@ -95,22 +95,6 @@ int main(int argc, char **argv)	// Definition of main function
                 yyparse(); //keep on calling above grammar rules 
         }
 
-
-/*        // open a file handle to a particular file:
-        FILE *myfile = fopen("beam.std", "r");
-        // make sure it's valid:
-        if (!myfile) {
-                cout << "I can't open a.snazzle.file!" << endl;
-                return -1;
-        }
-        // set flex to read from it instead of defaulting to STDIN:
-        yyin = myfile;
-
-        // parse through the input until there is no more:
-        do {
-                yyparse();
-        } while (!feof(yyin));
-*/
 }
 void yyerror(const char *s1)	// Definition of function handling error
 {
