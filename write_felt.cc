@@ -32,11 +32,14 @@ void write::total_node_beam() {
 	int nodes, elements;
 	nodes = jc_count/3;
 	elements = mi_count/2;
+//cout << "jc_count = " << jc_count << " nodes = " << nodes << endl;
+//cout << "mi_count = " << mi_count << " elements = " << elements << endl;
 	f << "nodes=" << nodes << " elements=" << elements << endl;
 }
 
 void write::write_nodes() {
-	total_node_beam(); 
+//	total_node_beam();
+//cout <<"	aj	" <<  mi_count << endl;
 	ofstream f(out_file.c_str(), ios::app);
 	f << endl << "nodes" << endl;
 
@@ -55,7 +58,7 @@ void write::write_nodes() {
 void write::write_beams() {
 	ofstream f(out_file.c_str(), ios::app);
 	f << endl << "beam elements" << endl;
-
+//cout << "	" << mi_count << endl;
         for (int j = 0, i = 1; j < mi_count; j++) {
 	    if (j % 2 == 0) {
 		f << i << "  nodes=[" << mi[j];
@@ -66,6 +69,11 @@ void write::write_beams() {
 	}
 }
 
+void write::write_data() {
+	total_node_beam();
+	write_nodes();
+	write_beams();
+}
 void write::write_end_file() {
 	ofstream f(out_file.c_str(), ios::app);
 	f << endl << "end";

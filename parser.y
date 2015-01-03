@@ -46,17 +46,17 @@ title:
 	DESCRIPTION { w.write_title(); }
 	;
 jc:
-	JC coord { w.write_nodes(); mode = 'b'; }
+	JC coord { mode = 'b'; }
 	;
 mi:
-	MI coord { w.write_beams(); }
+	MI coord { }
 	;
 coord:
 	digit SEMICOLON
 	| digit SEMICOLON coord
 	;
 digit:
-	digit DIGIT { 
+	digit DIGIT {
 			if (mode == 'n') {
 			    w.store_values('n', $2, n_i);
 			    n_i++;
@@ -68,7 +68,7 @@ digit:
 	| DIGIT { } 
 	;
 end:
-	FINISH { w.write_end_file(); }
+	FINISH { w.write_data(); w.write_end_file(); }
 	;
 	
 %%

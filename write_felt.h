@@ -21,6 +21,7 @@ class write {
 	void total_node_beam();
 	void write_nodes();
 	void write_beams();
+	void write_data();
 	void write_end_file();
 };
 
