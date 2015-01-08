@@ -16,20 +16,20 @@ read choice
 if [ $choice -eq 1 ] ; then
  
 	echo `./std-flt.sh`
-	echo "*****************************************************************"
-	echo "*	Run the following command to convert the file		*"
-	echo "*	./flt-std input_file_name.flt output_file_name.std	*"
-	echo "*****************************************************************"
+#	echo "*****************************************************************"
+#	echo "*	Run the following command to convert the file		*"
+#	echo "*	./flt-std input_file_name.flt output_file_name.std	*"
+#	echo "*****************************************************************"
 
 
 else                   
 
         if [ $choice -eq 2 ] ; then
 		echo `./flt-std.sh`
-		echo "*****************************************************************"
-		echo "*	Run the following command to convert the file		*"
-		echo "*	./flt-std input_file_name.flt output_file_name.std	*"
-		echo "*****************************************************************"
+#		echo "*****************************************************************"
+#		echo "*	Run the following command to convert the file		*"
+#		echo "*	./flt-std input_file_name.flt output_file_name.std	*"
+#		echo "*****************************************************************"
 
                 else
                         echo "Please make a choice between 1-2 !"
