@@ -22,6 +22,9 @@ class write {
 	void write_nodes();
 	void write_beams();
 	void write_data();
+	void write_material();
+	void write_constraints();
+	void write_forces();
 	void write_end_file();
 };
 
