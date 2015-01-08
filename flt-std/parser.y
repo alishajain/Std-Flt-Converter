@@ -75,7 +75,9 @@ int main(int argc, char **argv)
                 yyparse(); //keep on calling above grammar rules 
         }
 
-        cout << endl << out_file << " has been generated in the same directory\n" << endl;
+	cout << "*************************************************************************" << endl;
+	cout << "*	" << out_file << " has been generated in the same directory		*" << endl;
+	cout << "*************************************************************************\n" << endl;
 
 	return 0;
 }
