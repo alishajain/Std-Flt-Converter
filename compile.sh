@@ -3,8 +3,8 @@
 # Declare variable choice and assign value 4
 choice=3
 # Print to stdout
- echo "1. Stad-flt"
- echo "2. Flt-Stad"
+ echo "1. Std-flt"
+ echo "2. Flt-Std"
  echo -n "Please choose a word [1,2]? "
 # Loop while the variable choice is equal 4
 # bash while loop
@@ -33,8 +33,8 @@ else
 
                 else
                         echo "Please make a choice between 1-2 !"
-			echo "1. Stad-flt"
-			echo "2. Flt-Stad"
+			echo "1. Std-flt"
+			echo "2. Flt-Std"
                         echo -n "Please choose a word [1,2]? "
                          choice=3
                 fi   

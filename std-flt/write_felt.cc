@@ -46,9 +46,9 @@ void write::write_nodes() {
 		f << " y=" << jc[j];
 	    } else if (j % 3 == 2) {
 		if (i == 1) {
-		   f << " z=" << jc[j] << "  constraint=free" << endl;
+		   f << " z=" << jc[j] << "  constraint=" << endl;
 		} else if (i == 2) {
-                   f << " z=" << jc[j] << "  constraint=fixed" << endl;
+                   f << " z=" << jc[j] << "  constraint=" << endl;
 		} else {
 		   f << " z=" << jc[j] << endl;
 		}
@@ -66,7 +66,7 @@ void write::write_beams() {
 		f << i << "  nodes=[" << mi[j];
 	    } else if (j % 2 == 1) {
 		if (i == 1) {
-		   f << "," << mi[j] << "]  material=steel" << endl;
+		   f << "," << mi[j] << "]  material=" << endl;
 		} else {
 		   f << "," << mi[j] << "]" << endl;
 		}
@@ -78,14 +78,14 @@ void write::write_beams() {
 void write::write_material() {
 	ofstream f(out_file.c_str(), ios::app);
 	f << endl << "material properties" << endl;
-	f << "steel  E=2.1e+11 A=0.0004 Ix=0 Iy=0 Iz=0 J=0 G=0 nu=0 t=0 rho=1 kappa=0" << endl;
+	f << endl;
 }
 
 void write::write_constraints() {
 	ofstream f(out_file.c_str(), ios::app);
 	f << endl << "constraints" << endl;
-	f << "free  tx=u ty=u tz=c rx=u ry=u rz=u" << endl;
-	f << "fixed  tx=c ty=c tz=c rx=u ry=u rz=u" << endl;
+	f << endl;
+	f << endl;
 }
 
 void write::write_forces() {
